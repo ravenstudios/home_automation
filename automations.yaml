@@ -1,0 +1,222 @@
+- id: '1588003624822'
+  alias: 'Kitchen Recessed Lights Toggle '
+  description: ''
+  trigger:
+  - payload: '{"TRIG":"SINGLE"}'
+    platform: mqtt
+    topic: stat/Kitchen_Switch/BUTTON1T
+  - platform: mqtt
+    topic: stat/laundry_room_switch/RESULT
+    payload: '{"Button3":{"Action":"SINGLE"}}'
+  condition: []
+  action:
+  - entity_id: switch.kitchen_lights
+    service: switch.toggle
+- id: '1588004034807'
+  alias: Kitchen Lamp Toggle
+  description: ''
+  trigger:
+  - payload: '{"ACTION":"SINGLE"}'
+    platform: mqtt
+    topic: stat/Kitchen_Switch/BUTTON2
+  condition: []
+  action:
+  - device_id: 5ea07447c8614e3aa27ed1fb2cada63a
+    domain: switch
+    entity_id: switch.kitchen_lamp
+    type: toggle
+- id: '1589246209250'
+  alias: Hall Light FromToggle
+  description: ''
+  trigger:
+  - payload: ' {"Button1":{"Action":"SINGLE"}}'
+    platform: mqtt
+    topic: stat/hall_switch/RESULT
+  condition: []
+  action:
+  - data: {}
+    service: switch.toggle
+    target:
+      device_id: 67a7254f62d42aa47b188a16dff9f284
+- id: '1592198025063'
+  alias: Bathroom Toggle Lights Low
+  description: ''
+  trigger:
+  - payload: '{"ACTION":"SINGLE"}'
+    platform: mqtt
+    topic: stat/bathroom_switch/BUTTON1
+  condition: []
+  action:
+  - data: {}
+    entity_id: switch.bathroom_lights_low
+    service: switch.toggle
+- id: '1599973182675'
+  alias: Bathroom Toggle Lights High
+  description: ''
+  trigger:
+  - payload: '{"ACTION":"DOUBLE"}'
+    platform: mqtt
+    topic: stat/bathroom_switch/BUTTON1
+  condition: []
+  action:
+  - data: {}
+    entity_id: switch.bathroom_lights_high
+    service: switch.toggle
+- id: '1601521116364'
+  alias: Kitchen Lights Auto Off
+  description: ''
+  trigger:
+  - entity_id: switch.kitchen_lights
+    for: '1:00:00'
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - data: {}
+    entity_id: switch.kitchen_lights
+    service: switch.turn_off
+- id: '1601531104468'
+  alias: Bathroom Lights Low Auto Off
+  description: ''
+  trigger:
+  - entity_id: switch.bathroom_lights_low
+    for: 00:30:00
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - data: {}
+    entity_id: switch.bathroom_lights_low
+    service: switch.turn_off
+  mode: single
+- id: '1601531334855'
+  alias: Bathroom Light High Auto Off
+  description: ''
+  trigger:
+  - entity_id: switch.bathroom_lights_high
+    for: 00:30:00
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - data: {}
+    entity_id: switch.bathroom_lights_high
+    service: switch.turn_off
+  mode: single
+- id: '1602441763892'
+  alias: 'Laundry Room Lights Toggle '
+  description: ''
+  trigger:
+  - payload: '{"TRIG":"SINGLE"}'
+    platform: mqtt
+    topic: stat/Kitchen_Switch/BUTTON2T
+  condition: []
+  action:
+  - data: {}
+    entity_id: switch.laundry_room_light
+    service: switch.toggle
+  mode: single
+- id: '1602442183547'
+  alias: Laundry Room Light Auto Off
+  description: ''
+  trigger:
+  - entity_id: switch.laundry_room_light
+    for:
+      hours: 0
+      minutes: 5
+      seconds: 0
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - data: {}
+    entity_id: switch.laundry_room_light
+    service: switch.turn_off
+  mode: single
+- id: '1602442496581'
+  alias: Hall Light Auto Off
+  description: ''
+  trigger:
+  - for:
+      hours: 0
+      minutes: 5
+      seconds: 5
+    from: 'off'
+    platform: state
+    to: 'on'
+    entity_id: switch.hall_light
+  condition: []
+  action:
+  - data: {}
+    service: switch.turn_off
+    target:
+      entity_id: switch.hall_light_2
+- id: '1607148014952'
+  alias: Living Room Lamp Toggle
+  description: ''
+  trigger:
+  - payload: '{"TRIG":"SINGLE"}'
+    platform: mqtt
+    topic: stat/Kitchen_Switch/BUTTON3T
+  condition: []
+  action:
+  - data: {}
+    entity_id: switch.living_room_lamp
+    service: switch.toggle
+  mode: single
+- id: '1611804198126'
+  alias: Bathroom Lights Toggle
+  description: ''
+  trigger:
+  - platform: mqtt
+    topic: stat/hall_switch/BUTTON2
+    payload: '{"ACTION":"SINGLE"}'
+  condition: []
+  action:
+  - service: switch.toggle
+    data: {}
+    entity_id: switch.bathroom_lights_low
+  mode: single
+- id: '1615347008708'
+  alias: Front Lights On
+  description: ''
+  trigger:
+  - platform: mqtt
+    topic: stat/front_porch_light/POWER
+    payload: 'ON'
+  condition: []
+  action:
+  - service: switch.turn_on
+    data: {}
+    entity_id: switch.outside_garage_lights
+  mode: single
+- id: '1615347099645'
+  alias: Front Lights Off
+  description: ''
+  trigger:
+  - platform: mqtt
+    topic: stat/front_porch_light/POWER
+    payload: 'OFF'
+  condition: []
+  action:
+  - service: switch.turn_off
+    data: {}
+    entity_id: switch.outside_garage_lights
+  mode: single
+- id: '1642842125964'
+  alias: Laundry Room Switch Laundry Room Light
+  description: ''
+  trigger:
+  - platform: mqtt
+    topic: stat/laundry_room_switch/RESULT
+    payload: '{"Button1":{"Action":"SINGLE"}}'
+  condition: []
+  action:
+  - service: switch.toggle
+    target:
+      entity_id: switch.laundry_room_light
+  mode: single
