@@ -1,0 +1,13 @@
+ - platform: mqtt
+   unique_id: laundry_room_pir
+   name: "Laundry Room PIR"
+   state_topic: "stat/laundry_room_pir/RESULT"
+   value_template: "{{ value_json.POWER }}"
+   command_topic: "cmnd/laundry_room_pir/POWER"
+   payload_on: "ON"
+   payload_off: "OFF"
+   availability_topic: "tele/laundry_room_pir/LWT"
+   payload_available: "Online"
+   payload_not_available: "Offline"
+   qos: 1
+   retain: false

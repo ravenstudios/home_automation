@@ -1,0 +1,13 @@
+  - platform: mqtt
+    name: “Front Porch Light"
+    unique_id: "front_porch_lightt"
+    state_topic: "stat/front_porch_light/RESULT"
+    value_template: "{{ value_json.POWER }}"
+    command_topic: "cmnd/front_porch_light/POWER"
+    payload_on: "ON"
+    payload_off: "OFF"
+    availability_topic: "tele/front_porch_light/LWT"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+    qos: 1
+    retain: false

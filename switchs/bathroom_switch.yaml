@@ -1,0 +1,13 @@
+  - platform: mqtt
+    unique_id: bathroom_switch
+    name: “Bathroom Switch"
+    state_topic: "stat/bathroom_switch/RESULT"
+    value_template: "{{ value_json.POWER }}"
+    command_topic: "cmnd/bathroom_switch/POWER"
+    payload_on: "ON"
+    payload_off: "OFF"
+    availability_topic: "tele/bathroom_switch/LWT"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+    qos: 1
+    retain: false

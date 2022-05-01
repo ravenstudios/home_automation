@@ -1,0 +1,13 @@
+  - platform: mqtt
+    unique_id: hall_switch
+    name: “Hall Switch"
+    state_topic: "stat/hall_switch/RESULT"
+    value_template: "{{ value_json.POWER }}"
+    command_topic: "cmnd/hall_switch/POWER"
+    payload_on: "ON"
+    payload_off: "OFF"
+    availability_topic: "tele/hall_switch/LWT"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+    qos: 1
+    retain: false

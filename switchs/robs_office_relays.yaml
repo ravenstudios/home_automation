@@ -1,0 +1,69 @@
+ - platform: mqtt
+   unique_id: Monitors
+   name: "Monitors"
+   state_topic: "stat/robs_office_relays/RESULT"
+   value_template: "{{ value_json.POWER }}"
+   command_topic: "cmnd/robs_office_relays/POWER2"
+   payload_on: "ON"
+   payload_off: "OFF"
+   availability_topic: "tele/robs_office_relays/LWT"
+   payload_available: "Online"
+   payload_not_available: "Offline"
+   qos: 1
+   retain: false
+
+ - platform: mqtt
+   unique_id: speakers
+   name: "Speakers"
+   state_topic: "stat/robs_office_relays/RESULT"
+   value_template: "{{ value_json.POWER }}"
+   command_topic: "cmnd/robs_office_relays/POWER3"
+   payload_on: "ON"
+   payload_off: "OFF"
+   availability_topic: "tele/robs_office_relays/LWT"
+   payload_available: "Online"
+   payload_not_available: "Offline"
+   qos: 1
+   retain: false
+
+ - platform: mqtt
+   unique_id: lab
+   name: "Lab"
+   state_topic: "stat/robs_office_relays/RESULT"
+   value_template: "{{ value_json.POWER }}"
+   command_topic: "cmnd/robs_office_relays/POWER5"
+   payload_on: "ON"
+   payload_off: "OFF"
+   availability_topic: "tele/robs_office_relays/LWT"
+   payload_available: "Online"
+   payload_not_available: "Offline"
+   qos: 1
+   retain: false
+
+ - platform: mqtt
+   unique_id: standing_lamp
+   name: "Standing Lamp"
+   state_topic: "stat/robs_office_relays/RESULT"
+   value_template: "{{ value_json.POWER }}"
+   command_topic: "cmnd/robs_office_relays/POWER7"
+   payload_on: "ON"
+   payload_off: "OFF"
+   availability_topic: "tele/robs_office_relays/LWT"
+   payload_available: "Online"
+   payload_not_available: "Offline"
+   qos: 1
+   retain: false
+
+ - platform: mqtt
+   unique_id: desk_lamp
+   name: "Desk Lamp"
+   state_topic: "stat/robs_office_relays/RESULT"
+   value_template: "{{ value_json.POWER }}"
+   command_topic: "cmnd/robs_office_relays/POWER8"
+   payload_on: "ON"
+   payload_off: "OFF"
+   availability_topic: "tele/robs_office_relays/LWT"
+   payload_available: "Online"
+   payload_not_available: "Offline"
+   qos: 1
+   retain: false

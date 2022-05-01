@@ -1,0 +1,13 @@
+- platform: mqtt
+  name: "Robs Office Recessed"
+  unique_id: "robs_office_recessed"
+  state_topic: "stat/robs_office_recessed/RESULT"
+  value_template: "{{ value_json.POWER }}"
+  command_topic: "cmnd/robs_office_recessed/POWER"
+  payload_on: "ON"
+  payload_off: "OFF"
+  availability_topic: "tele/robs_office_recessed/LWT"
+  payload_available: "Online"
+  payload_not_available: "Offline"
+  qos: 1
+  retain: false

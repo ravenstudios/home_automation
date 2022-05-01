@@ -1,0 +1,13 @@
+  - platform: mqtt
+    name: “Outside Garage Lights"
+    unique_id: "outside_garage_lights"
+    state_topic: "stat/outside_garage_lights/RESULT"
+    value_template: "{{ value_json.POWER }}"
+    command_topic: "cmnd/outside_garage_lights/POWER"
+    payload_on: "ON"
+    payload_off: "OFF"
+    availability_topic: "tele/outside_garage_lights/LWT"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+    qos: 1
+    retain: false

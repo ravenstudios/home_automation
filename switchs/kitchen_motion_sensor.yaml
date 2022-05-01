@@ -1,0 +1,13 @@
+  - platform: mqtt
+    unique_id: Kitchen_Motion_Sensor
+    name: “Kitchen Motion Sensor"
+    state_topic: "stat/Kitchen_Motion_Sensor/RESULT"
+    value_template: "{{ value_json.POWER }}"
+    command_topic: "cmnd/Kitchen_Motion_Sensor/POWER"
+    payload_on: "ON"
+    payload_off: "OFF"
+    availability_topic: "tele/Kitchen_Motion_Sensor/LWT"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+    qos: 1
+    retain: false

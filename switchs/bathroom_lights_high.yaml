@@ -1,0 +1,13 @@
+  - platform: mqtt
+    unique_id: bathroom_lights_high
+    name: “Bathroom Lights High"
+    state_topic: "stat/bathroom_lights_high/RESULT"
+    value_template: "{{ value_json.POWER }}"
+    command_topic: "cmnd/bathroom_lights_high/POWER"
+    payload_on: "ON"
+    payload_off: "OFF"
+    availability_topic: "tele/bathroom_lights_high/LWT"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+    qos: 1
+    retain: false

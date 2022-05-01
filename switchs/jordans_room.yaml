@@ -1,0 +1,13 @@
+ - platform: mqtt
+   unique_id: jordans_room
+   name: "Jordans Room"
+   state_topic: "stat/jordans_room/RESULT"
+   value_template: "{{ value_json.POWER }}"
+   command_topic: "cmnd/jordans_room/POWER"
+   payload_on: "ON"
+   payload_off: "OFF"
+   availability_topic: "tele/jordans_room/LWT"
+   payload_available: "Online"
+   payload_not_available: "Offline"
+   qos: 1
+   retain: false

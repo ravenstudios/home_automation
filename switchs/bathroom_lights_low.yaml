@@ -1,0 +1,13 @@
+  - platform: mqtt
+    unique_id: bathroom_lights_low
+    name: “Bathroom Lights Low"
+    state_topic: "stat/bathroom_lights_low/RESULT"
+    value_template: "{{ value_json.POWER }}"
+    command_topic: "cmnd/bathroom_lights_low/POWER"
+    payload_on: "ON"
+    payload_off: "OFF"
+    availability_topic: "tele/bathroom_lights_low/LWT"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+    qos: 1
+    retain: false
