@@ -88,8 +88,11 @@
   condition: []
   action:
   - data: {}
-    entity_id: switch.bathroom_lights_low
     service: switch.turn_off
+    target:
+      device_id:
+      - 2e67be6d5153fea7a8f192a740046b9a
+      - 9210a7ff173c86dce948a174c7bc3ce2
   mode: single
 - id: '1601531334855'
   alias: Bathroom Light High Auto Off
@@ -173,8 +176,8 @@
   description: ''
   trigger:
   - platform: mqtt
-    topic: stat/hall_switch/BUTTON2
-    payload: '{"ACTION":"SINGLE"}'
+    topic: stat/hall_switch/RESULT
+    payload: ' {"Button2":{"Action":"SINGLE"}}'
   condition: []
   action:
   - service: switch.toggle
@@ -219,4 +222,30 @@
   - service: switch.toggle
     target:
       entity_id: switch.laundry_room_light
+  mode: single
+- id: '1651377099140'
+  alias: Outside Lights Auto Off
+  description: Turns off outside lights after 15 minutes.
+  trigger:
+  - platform: state
+    entity_id: switch.back_porch_light
+    from: 'off'
+    to: 'on'
+    for:
+      hours: 0
+      minutes: 15
+      seconds: 0
+  - platform: state
+    entity_id: switch.backyard_lights
+    from: 'off'
+    to: 'on'
+    for:
+      hours: 0
+      minutes: 15
+      seconds: 0
+  condition: []
+  action:
+  - service: switch.turn_off
+    target:
+      area_id: backyard
   mode: single
