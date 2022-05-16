@@ -2,42 +2,38 @@
   alias: 'Kitchen Recessed Lights Toggle '
   description: ''
   trigger:
-  - payload: '{"TRIG":"SINGLE"}'
-    platform: mqtt
-    topic: stat/Kitchen_Switch/BUTTON1T
-  - platform: mqtt
-    topic: stat/laundry_room_switch/RESULT
-    payload: '{"Button3":{"Action":"SINGLE"}}'
+  - platform: device
+    domain: tasmota
+    device_id: 787be0d81776097794315ca53f472955
+    type: button_short_press
+    subtype: button_1
+    discovery_id: F4CFA2D820B7_button_1_SINGLE
+  - platform: device
+    domain: tasmota
+    device_id: 1a6ed5a5d36478b7866aed987f271bf5
+    type: button_short_press
+    subtype: button_2
+    discovery_id: 483FDA65FD19_button_2_SINGLE
   condition: []
   action:
   - entity_id: switch.kitchen_lights
     service: switch.toggle
-- id: '1588004034807'
-  alias: Kitchen Lamp Toggle
-  description: ''
-  trigger:
-  - payload: '{"ACTION":"SINGLE"}'
-    platform: mqtt
-    topic: stat/Kitchen_Switch/BUTTON2
-  condition: []
-  action:
-  - device_id: 5ea07447c8614e3aa27ed1fb2cada63a
-    domain: switch
-    entity_id: switch.kitchen_lamp
-    type: toggle
 - id: '1589246209250'
   alias: Hall Light FromToggle
   description: ''
   trigger:
-  - payload: ' {"Button1":{"Action":"SINGLE"}}'
-    platform: mqtt
-    topic: stat/hall_switch/RESULT
+  - platform: device
+    domain: tasmota
+    device_id: 9cd2c82298e77e872794bb0a789dd540
+    type: button_short_press
+    subtype: button_1
+    discovery_id: D8BFC00D4D7F_button_1_SINGLE
   condition: []
   action:
-  - data: {}
-    service: switch.toggle
-    target:
-      device_id: 67a7254f62d42aa47b188a16dff9f284
+  - type: toggle
+    device_id: 67a7254f62d42aa47b188a16dff9f284
+    entity_id: switch.hall_light_2
+    domain: switch
 - id: '1592198025063'
   alias: Bathroom Toggle Lights Low
   description: ''
@@ -66,16 +62,24 @@
   alias: Kitchen Lights Auto Off
   description: ''
   trigger:
-  - entity_id: switch.kitchen_lights
-    for: '1:00:00'
-    from: 'off'
-    platform: state
-    to: 'on'
-  condition: []
-  action:
-  - data: {}
+  - platform: device
+    type: turned_on
+    device_id: b71e8db4fe566776faf49ef7e64c3a95
     entity_id: switch.kitchen_lights
-    service: switch.turn_off
+    domain: switch
+    for:
+      hours: 0
+      minutes: 10
+      seconds: 0
+  condition:
+  - condition: state
+    entity_id: input_boolean.kitchen_is_cooking
+    state: 'off'
+  action:
+  - type: turn_off
+    device_id: b71e8db4fe566776faf49ef7e64c3a95
+    entity_id: switch.kitchen_lights
+    domain: switch
 - id: '1601531104468'
   alias: Bathroom Lights Low Auto Off
   description: ''
@@ -88,11 +92,8 @@
   condition: []
   action:
   - data: {}
+    entity_id: switch.bathroom_lights_low
     service: switch.turn_off
-    target:
-      device_id:
-      - 2e67be6d5153fea7a8f192a740046b9a
-      - 9210a7ff173c86dce948a174c7bc3ce2
   mode: single
 - id: '1601531334855'
   alias: Bathroom Light High Auto Off
@@ -113,9 +114,18 @@
   alias: 'Laundry Room Lights Toggle '
   description: ''
   trigger:
-  - payload: '{"TRIG":"SINGLE"}'
-    platform: mqtt
-    topic: stat/Kitchen_Switch/BUTTON2T
+  - platform: device
+    domain: tasmota
+    device_id: 787be0d81776097794315ca53f472955
+    type: button_short_press
+    subtype: button_2
+    discovery_id: F4CFA2D820B7_button_2_SINGLE
+  - platform: device
+    domain: tasmota
+    device_id: 1a6ed5a5d36478b7866aed987f271bf5
+    type: button_short_press
+    subtype: button_1
+    discovery_id: 483FDA65FD19_button_1_SINGLE
   condition: []
   action:
   - data: {}
@@ -162,9 +172,12 @@
   alias: Living Room Lamp Toggle
   description: ''
   trigger:
-  - payload: '{"TRIG":"SINGLE"}'
-    platform: mqtt
-    topic: stat/Kitchen_Switch/BUTTON3T
+  - platform: device
+    domain: tasmota
+    device_id: 787be0d81776097794315ca53f472955
+    type: button_short_press
+    subtype: button_3
+    discovery_id: F4CFA2D820B7_button_3_SINGLE
   condition: []
   action:
   - data: {}
@@ -176,8 +189,8 @@
   description: ''
   trigger:
   - platform: mqtt
-    topic: stat/hall_switch/RESULT
-    payload: ' {"Button2":{"Action":"SINGLE"}}'
+    topic: stat/hall_switch/BUTTON2
+    payload: '{"ACTION":"SINGLE"}'
   condition: []
   action:
   - service: switch.toggle
@@ -214,38 +227,202 @@
   alias: Laundry Room Switch Laundry Room Light
   description: ''
   trigger:
-  - platform: mqtt
-    topic: stat/laundry_room_switch/RESULT
-    payload: '{"Button1":{"Action":"SINGLE"}}'
+  - platform: device
+    domain: tasmota
+    device_id: 1a6ed5a5d36478b7866aed987f271bf5
+    type: button_short_press
+    subtype: button_1
+    discovery_id: 483FDA65FD19_button_1_SINGLE
+  - platform: device
+    domain: tasmota
+    device_id: 787be0d81776097794315ca53f472955
+    type: button_short_press
+    subtype: button_2
+    discovery_id: F4CFA2D820B7_button_2_SINGLE
   condition: []
   action:
   - service: switch.toggle
     target:
       entity_id: switch.laundry_room_light
   mode: single
-- id: '1651377099140'
-  alias: Outside Lights Auto Off
-  description: Turns off outside lights after 15 minutes.
+- id: '1652604693602'
+  alias: Laundry Room Motion On
+  description: ''
   trigger:
-  - platform: state
-    entity_id: switch.back_porch_light
-    from: 'off'
-    to: 'on'
+  - type: value
+    platform: device
+    device_id: c9a523889c4e6b72db47d3b0dd90a88c
+    entity_id: sensor.laundry_room_motion
+    domain: sensor
+    below: 5
+  condition: []
+  action:
+  - service: switch.turn_on
+    target:
+      entity_id: switch.laundry_room_light
+  mode: single
+- id: '1652605238692'
+  alias: BRTB laundry room light off
+  description: ''
+  trigger:
+  - platform: device
+    domain: tasmota
+    device_id: aaff186205e55c6788f44e2a936b8652
+    type: button_short_press
+    subtype: button_1
+    discovery_id: F4CFA2D82091_button_1_SINGLE
+  condition: []
+  action:
+  - type: turn_off
+    device_id: b2929aa3737c9481ad7dfb30f1c85e18
+    entity_id: switch.laundry_room_light_2
+    domain: switch
+  mode: single
+- id: '1652672206839'
+  alias: Kitchen Lights Cooking Toogle
+  description: ''
+  trigger:
+  - platform: device
+    domain: tasmota
+    device_id: 787be0d81776097794315ca53f472955
+    type: button_double_press
+    subtype: button_1
+    discovery_id: F4CFA2D820B7_button_1_DOUBLE
+  condition: []
+  action:
+  - choose:
+    - conditions:
+      - condition: state
+        entity_id: input_boolean.kitchen_is_cooking
+        state: 'off'
+      sequence:
+      - service: tts.cloud_say
+        data:
+          entity_id: media_player.kitchen_speaker
+          message: Kitchen Lighting cooking mode enabled.
+      - service: input_boolean.turn_on
+        target:
+          entity_id: input_boolean.kitchen_is_cooking
+      - type: turn_on
+        device_id: b71e8db4fe566776faf49ef7e64c3a95
+        entity_id: switch.kitchen_lights
+        domain: switch
+    default:
+    - service: tts.cloud_say
+      data:
+        entity_id: media_player.kitchen_speaker
+        message: Kitchen Lighting cooking mode disabled.
+    - service: input_boolean.turn_off
+      target:
+        entity_id: input_boolean.kitchen_is_cooking
+    - type: turn_off
+      device_id: b71e8db4fe566776faf49ef7e64c3a95
+      entity_id: switch.kitchen_lights
+      domain: switch
+  mode: single
+- id: '1652678428903'
+  alias: Robs Nightstand Light Auto Off
+  description: ''
+  trigger:
+  - platform: device
+    type: turned_on
+    device_id: 5dcb687e03053dd1559d5b47a6cd6f0a
+    entity_id: switch.robs_nightstand_light
+    domain: switch
     for:
-      hours: 0
-      minutes: 15
-      seconds: 0
-  - platform: state
-    entity_id: switch.backyard_lights
-    from: 'off'
-    to: 'on'
-    for:
-      hours: 0
-      minutes: 15
+      hours: 1
+      minutes: 0
       seconds: 0
   condition: []
   action:
-  - service: switch.turn_off
-    target:
-      area_id: backyard
+  - type: turn_off
+    device_id: 5dcb687e03053dd1559d5b47a6cd6f0a
+    entity_id: switch.tasmota
+    domain: switch
+  mode: single
+- id: '1652678745846'
+  alias: Robs Nightstand Light Toggle
+  description: ''
+  trigger:
+  - platform: device
+    domain: tasmota
+    device_id: 5dcb687e03053dd1559d5b47a6cd6f0a
+    type: button_short_press
+    subtype: button_1
+    discovery_id: 70039F5961FE_button_1_SINGLE
+  - platform: device
+    domain: tasmota
+    device_id: 931b96484245f21c1e831dcf45aca315
+    type: button_double_press
+    subtype: button_1
+    discovery_id: 8CCE4E0CA90D_button_1_DOUBLE
+  condition: []
+  action:
+  - type: toggle
+    device_id: 5dcb687e03053dd1559d5b47a6cd6f0a
+    entity_id: switch.robs_nightstand_light
+    domain: switch
+  mode: single
+- id: '1652679692531'
+  alias: All Lights Off
+  description: ''
+  trigger:
+  - platform: device
+    domain: tasmota
+    device_id: 5dcb687e03053dd1559d5b47a6cd6f0a
+    type: button_long_press
+    subtype: button_1
+    discovery_id: 70039F5961FE_button_1_HOLD
+  - platform: device
+    domain: tasmota
+    device_id: 931b96484245f21c1e831dcf45aca315
+    type: button_long_press
+    subtype: button_1
+    discovery_id: 8CCE4E0CA90D_button_1_HOLD
+  condition: []
+  action:
+  - scene: scene.all_lights
+  mode: single
+- id: '1652682141317'
+  alias: Krystles Nightstand Light Auto Off
+  description: ''
+  trigger:
+  - platform: device
+    type: turned_on
+    device_id: 931b96484245f21c1e831dcf45aca315
+    entity_id: switch.tasmota
+    domain: switch
+    for:
+      hours: 1
+      minutes: 0
+      seconds: 0
+  condition: []
+  action:
+  - type: turn_off
+    device_id: 931b96484245f21c1e831dcf45aca315
+    entity_id: switch.tasmota
+    domain: switch
+  mode: single
+- id: '1652682212210'
+  alias: Kryslte's Nightstand Light Toggle
+  description: ''
+  trigger:
+  - platform: device
+    domain: tasmota
+    device_id: 931b96484245f21c1e831dcf45aca315
+    type: button_short_press
+    subtype: button_1
+    discovery_id: 8CCE4E0CA90D_button_1_SINGLE
+  - platform: device
+    domain: tasmota
+    device_id: 5dcb687e03053dd1559d5b47a6cd6f0a
+    type: button_double_press
+    subtype: button_1
+    discovery_id: 70039F5961FE_button_1_DOUBLE
+  condition: []
+  action:
+  - type: toggle
+    device_id: 931b96484245f21c1e831dcf45aca315
+    entity_id: switch.tasmota
+    domain: switch
   mode: single

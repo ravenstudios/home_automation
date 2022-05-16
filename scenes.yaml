@@ -1,9 +1,43 @@
-- id: '1651376730869'
-  name: Tv
+- id: '1652679533691'
+  name: All Lights
   entities:
+    switch.back_porch_light_2:
+      friendly_name: Back Porch Light
+      state: 'off'
+    switch.backyard_lights_2:
+      friendly_name: Backyard Lights
+      state: 'off'
+    switch.bathroom_lights_high_2:
+      friendly_name: Bathroom Lights High
+      state: 'off'
+    switch.bathroom_lights_low_2:
+      friendly_name: Bathroom Lights Low
+      state: 'off'
+    switch.front_porch_light_2:
+      friendly_name: Front Porch Light
+      state: 'off'
     switch.hall_light_2:
       friendly_name: Hall Light
       state: 'off'
     switch.kitchen_lights:
       friendly_name: Kitchen Lights
       state: 'off'
+    switch.laundry_room_light_2:
+      friendly_name: Laundry Room Light
+      state: 'off'
+    switch.living_room_lamp:
+      friendly_name: Living Room Lamp
+      state: 'off'
+    switch.outside_garage_lights_2:
+      friendly_name: Outside Garage Lights
+      state: 'off'
+    switch.robs_nightstand_light:
+      friendly_name: Robs Nightstand Light
+      state: 'off'
+    switch.small_living_room_lamp:
+      friendly_name: Small Living Room Lamp
+      state: 'off'
+    switch.smell_good:
+      friendly_name: Smell Good
+      state: 'off'
+  icon: mdi:candelabra-fire
