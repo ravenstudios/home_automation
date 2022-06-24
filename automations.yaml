@@ -38,9 +38,12 @@
   alias: Bathroom Toggle Lights Low
   description: ''
   trigger:
-  - payload: '{"ACTION":"SINGLE"}'
-    platform: mqtt
-    topic: stat/bathroom_switch/BUTTON1
+  - platform: device
+    domain: tasmota
+    device_id: 9cd2c82298e77e872794bb0a789dd540
+    type: button_short_press
+    subtype: button_3
+    discovery_id: D8BFC00D4D7F_button_3_SINGLE
   condition: []
   action:
   - data: {}
@@ -154,20 +157,21 @@
   alias: Hall Light Auto Off
   description: ''
   trigger:
-  - for:
+  - platform: device
+    type: turned_on
+    device_id: 67a7254f62d42aa47b188a16dff9f284
+    entity_id: switch.hall_light_2
+    domain: switch
+    for:
       hours: 0
-      minutes: 5
-      seconds: 5
-    from: 'off'
-    platform: state
-    to: 'on'
-    entity_id: switch.hall_light
+      minutes: 1
+      seconds: 0
   condition: []
   action:
-  - data: {}
-    service: switch.turn_off
-    target:
-      entity_id: switch.hall_light_2
+  - type: turn_off
+    device_id: 67a7254f62d42aa47b188a16dff9f284
+    entity_id: switch.hall_light_2
+    domain: switch
 - id: '1607148014952'
   alias: Living Room Lamp Toggle
   description: ''
@@ -254,7 +258,8 @@
     device_id: c9a523889c4e6b72db47d3b0dd90a88c
     entity_id: sensor.laundry_room_motion
     domain: sensor
-    below: 5
+    below: 10
+    above: 1
   condition: []
   action:
   - service: switch.turn_on
@@ -356,6 +361,12 @@
     type: button_double_press
     subtype: button_1
     discovery_id: 8CCE4E0CA90D_button_1_DOUBLE
+  - platform: device
+    domain: tasmota
+    device_id: 9cd2c82298e77e872794bb0a789dd540
+    type: button_short_press
+    subtype: button_2
+    discovery_id: D8BFC00D4D7F_button_2_SINGLE
   condition: []
   action:
   - type: toggle
@@ -426,3 +437,75 @@
     entity_id: switch.tasmota
     domain: switch
   mode: single
+- id: '1653265100879'
+  alias: Hall motion on
+  description: ''
+  trigger:
+  - type: value
+    platform: device
+    device_id: 217c5ff7a4b340d1045c43710d90224f
+    entity_id: sensor.hall_motion_sensor
+    domain: sensor
+    below: 1
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 0
+  condition: []
+  action:
+  - type: turn_on
+    device_id: 67a7254f62d42aa47b188a16dff9f284
+    entity_id: switch.hall_light_2
+    domain: switch
+  mode: single
+- id: '1653267435277'
+  alias: Alarm Armed
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: alarm_control_panel.home_alarm
+    to: armed_home
+  condition:
+  - condition: state
+    entity_id: alarm_control_panel.home_alarm
+    state: armed_home
+  action:
+  - service: tts.cloud_say
+    data:
+      entity_id: media_player.all
+      message: Alarm armed
+  mode: single
+- id: '1653716343290'
+  alias: New Automation
+  description: ''
+  trigger:
+  - type: value
+    platform: device
+    device_id: d5099c3d298323d70b83fe59770a805e
+    entity_id: sensor.hall_motion_sensor
+    domain: sensor
+    below: 1
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 1
+  condition: []
+  action:
+  - type: turn_on
+    device_id: 67a7254f62d42aa47b188a16dff9f284
+    entity_id: switch.hall_light_2
+    domain: switch
+  mode: single
+- id: '1656033147320'
+  alias: New Automation
+  description: ''
+  use_blueprint:
+    path: Mikkelmoeller/aqara-magic-cube-zha-51-actions.yaml
+    input:
+      remote: fb09190d32f689bd3e079a9da9b3bf42
+      knock_any_side: true
+      cube_knock_any:
+      - type: toggle
+        device_id: b2929aa3737c9481ad7dfb30f1c85e18
+        entity_id: switch.laundry_room_light_2
+        domain: switch
